@@ -1,12 +1,16 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
+from dotenv import load_dotenv
 import os
+
+load_dotenv()  # Load environment variables from .env
+
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
-# Configure Database
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///test.db')  # Fallback to SQLite
+# Configure Database with PostgreSQL URI from Railway
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL') 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -50,8 +54,8 @@ def login():
 def dashboard():
     if 'user_id' not in session:
         return redirect(url_for('home'))
-    return render_template('dashboard.html')
+    return "Welcome to your dashboard!"
 
 if __name__ == '__main__':
-    db.create_all()  # Ensure tables are created
+    db.create_all()  # Ensure tables are created in the database
     app.run(debug=True)
