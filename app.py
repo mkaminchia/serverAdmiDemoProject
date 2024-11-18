@@ -3,16 +3,19 @@ from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 import os
 
-load_dotenv()  # Load environment variables from .env
-
+# Load environment variables from .env
+load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
-# Configure Database with PostgreSQL URI from Railway
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL') 
+# Configure Database for MySQL on Railway
+# Use the DATABASE_URL environment variable for Railway MySQL
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://root:RsKQJaLaEsaXAoWwLqFYWcbdpwWfsnaC@mysql.railway.internal:3306/railway"
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')  # Use DATABASE_URL from .env
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+# Initialize the database
 db = SQLAlchemy(app)
 
 # User Model
@@ -31,7 +34,7 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        # Add user to database
+        # Add user to the database
         if User.query.filter_by(username=username).first():
             return "User already exists!"
         new_user = User(username=username, password=password)
@@ -54,8 +57,9 @@ def login():
 def dashboard():
     if 'user_id' not in session:
         return redirect(url_for('home'))
-    return "Welcome to your dashboard!"
+    return render_template('dashboard.html')
 
 if __name__ == '__main__':
-    db.create_all()  # Ensure tables are created in the database
+    with app.app_context():
+        db.create_all()  # Ensure tables are created
     app.run(debug=True)
