@@ -11,7 +11,7 @@ app.secret_key = 'your_secret_key'
 
 # Configure Database for MySQL on Railway
 # Use the DATABASE_URL environment variable for Railway MySQL
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://root:RsKQJaLaEsaXAoWwLqFYWcbdpwWfsnaC@mysql.railway.internal:3306/railway"
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://root:RsKQJaLaEsaXAoWwLqFYWcbdpwWfsnaC@autorack.proxy.rlwy.net:22642/railway"
 # app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')  # Use DATABASE_URL from .env
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
