@@ -9,9 +9,9 @@
     <h1>Register</h1>
     <form method="POST" action="/register">
         <label for="username">Username</label>
-        <input type="text" id="username" name="username" required>
+        <input type="text" id="username" name="username" required minlength="3" maxlength="20">
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" id="password" name="password" required minlength="8">
         <button type="submit">Register</button>
     </form>
     <a href="/">Already have an account? Login</a>

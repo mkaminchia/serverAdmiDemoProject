@@ -1,0 +1,14 @@
+runtime: python312  # or python310, depending on the version you're using
+
+entrypoint: python app.py  # This runs the app directly using Python and Waitress
+
+env_variables:
+  SOME_KEY: "some_value"  # Optional environment variables
+
+instance_class: F2  # Optional: Choose your preferred instance class
+
+handlers:
+- url: /static
+  static_dir: static/
+- url: /.*  # Catch-all for the rest of the requests
+  script: auto
